@@ -35,7 +35,7 @@ REPO_NAME = 'omy_pnp'
 NUM_DEMO = 10 # Number of demonstrations to collect
 ROOT = get_next_dataset_dir(os.path.join(current_dir, "..", "dataset")) # The root directory to save the demonstrations
 TASK_NAME = 'Put mug cup on the plate'
-xml_path = os.path.join(current_dir, "..", "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
+xml_path = os.path.join(current_dir, "..", 'external', "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
 
 # Define the environment
 PnPEnv = SimpleEnv(xml_path, seed = SEED, state_type = 'joint_angle')
