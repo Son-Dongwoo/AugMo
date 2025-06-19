@@ -1,7 +1,7 @@
 import sys
 import os
 current_dir = os.path.dirname(__file__)
-sys.path.append(os.path.abspath(os.path.join(current_dir, '..', 'lerobot-mujoco-tutorial')))
+sys.path.append(os.path.abspath(os.path.join(current_dir, '..', 'external', 'lerobot-mujoco-tutorial')))
 
 import numpy as np
 from PIL import Image
