@@ -68,7 +68,7 @@ device = torch.device("cuda")
 # Number of offline training steps (we'll only do offline training for this example.)
 # Adjust as you prefer. 5000 steps are needed to get something worth evaluating.
 training_steps = 1000
-log_freq = 1
+log_freq = 100
 
 # When starting from scratch (i.e. not from a pretrained policy), we need to specify 2 things before
 # creating the policy:
@@ -128,10 +128,11 @@ while not done:
         optimizer.step()
         optimizer.zero_grad()
 
+        for k, v in loss_dict.items():
+            log_history["loss_dict"][k].append(v)
+            
         if step % log_freq == 0:        
-            for k, v in loss_dict.items():
-                print(f"step: {step} {k}: {v:.6f}")
-                log_history["loss_dict"][k].append(v)
+            print(f"step: {step} {k}: {v:.6f}")
             
         step += 1
         log_history["step"].append(step)
