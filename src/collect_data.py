@@ -9,7 +9,7 @@ from PIL import Image
 from mujoco_env.y_env import SimpleEnv
 from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
 
-def get_next_train_dir(base_dir="."):
+def get_next_dataset_dir(base_dir="."):
     os.makedirs(base_dir, exist_ok=True)
     
     prefix = "record"
@@ -33,7 +33,7 @@ SEED = 0
 
 REPO_NAME = 'omy_pnp'
 NUM_DEMO = 10 # Number of demonstrations to collect
-ROOT = get_next_train_dir(os.path.join(current_dir, "..", "dataset")) # The root directory to save the demonstrations
+ROOT = get_next_dataset_dir(os.path.join(current_dir, "..", "dataset")) # The root directory to save the demonstrations
 TASK_NAME = 'Put mug cup on the plate'
 xml_path = os.path.join(current_dir, "..", "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
 
