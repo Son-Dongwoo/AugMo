@@ -59,7 +59,7 @@ def get_next_train_dir(base_dir="."):
     next_dir = f"{prefix}{max_idx + 1}"
     return os.path.join(base_dir, next_dir)
 
-ROOT = os.path.join(current_dir, "..", "demo_data")
+ROOT = os.path.join(current_dir, "..", "dataset", "record1")
 SAVE_MODEL_DIR = get_next_train_dir(base_dir=os.path.join(current_dir, "..", "model"))
 
 device = torch.device("cuda")
