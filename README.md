@@ -13,14 +13,16 @@ conda create -n augmo python=3.10
 conda activate augmo
 
 # 2. LeRobot 설치
-git clone https://github.com/huggingface/lerobot.git
+# git clone https://github.com/huggingface/lerobot.git
 cd lerobot
 pip install -e .
 cd ..
 
 # 3. 튜토리얼 환경 설치
-cd lerobot_mujoco_tutorial
+# git clone https://github.com/jeongeun980906/lerobot-mujoco-tutorial.git
+cd lerobot-mujoco-tutorial
 pip install -r requirements.txt
+cd..
 
 # 4. 오브젝트 압축 해제
 cd asset/objaverse

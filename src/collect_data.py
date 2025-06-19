@@ -1,7 +1,7 @@
 import sys
 import os
 current_dir = os.path.dirname(__file__)
-sys.path.append(os.path.abspath(os.path.join(current_dir, '..', 'lerobot_mujoco_tutorial')))
+sys.path.append(os.path.abspath(os.path.join(current_dir, '..', 'lerobot-mujoco-tutorial')))
 
 import numpy as np
 from PIL import Image
@@ -17,7 +17,7 @@ REPO_NAME = 'omy_pnp'
 NUM_DEMO = 10 # Number of demonstrations to collect
 ROOT = os.path.join(current_dir, "..", "demo_data") # The root directory to save the demonstrations
 TASK_NAME = 'Put mug cup on the plate'
-xml_path = os.path.join(current_dir, "..", "lerobot_mujoco_tutorial/asset/example_scene_y.xml")
+xml_path = os.path.join(current_dir, "..", "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
 
 # Define the environment
 PnPEnv = SimpleEnv(xml_path, seed = SEED, state_type = 'joint_angle')
