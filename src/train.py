@@ -11,8 +11,9 @@ from lerobot.common.datasets.factory import resolve_delta_timestamps
 import re
 import time
 import torch
-from torchvision import transforms
 import matplotlib.pyplot as plt
+from torchvision import transforms
+from collections import defaultdict
 
 class AddGaussianNoise(object):
     """
@@ -67,7 +68,7 @@ device = torch.device("cuda")
 # Number of offline training steps (we'll only do offline training for this example.)
 # Adjust as you prefer. 5000 steps are needed to get something worth evaluating.
 training_steps = 1000
-log_freq = 100
+log_freq = 1
 
 # When starting from scratch (i.e. not from a pretrained policy), we need to specify 2 things before
 # creating the policy:
@@ -109,6 +110,13 @@ dataloader = torch.utils.data.DataLoader(
 )
 
 # Run training loop.
+log_history = {
+    "elapsed_time": "",
+    'mae': 0.0,
+    "step": [],
+    "loss_dict": defaultdict(list)
+}
+
 step = 0
 done = False
 start_time = time.time()
@@ -123,8 +131,10 @@ while not done:
         if step % log_freq == 0:        
             for k, v in loss_dict.items():
                 print(f"step: {step} {k}: {v:.6f}")
+                log_history["loss_dict"][k].append(v)
             
         step += 1
+        log_history["step"].append(step)
         if step >= training_steps:
             done = True
             break
@@ -135,6 +145,7 @@ policy.save_pretrained(SAVE_MODEL_DIR)
 elapsed_time = time.time() - start_time
 h, m, s = int(elapsed_time // 3600), int((elapsed_time % 3600) // 60), int(elapsed_time % 60)
 print(f"Elapsed time: {h}h {m}m {s}s")
+log_history["elapsed_time"].append(f"{h}h {m}m {s}s")
 
 policy.eval()
 actions = []
@@ -159,7 +170,9 @@ for batch in test_dataloader:
     images.append(inp_batch["observation.image"])
 actions = torch.cat(actions, dim=0)
 gt_actions = torch.cat(gt_actions, dim=0)
-print(f"Mean action error: {torch.mean(torch.abs(actions - gt_actions)).item():.3f}")
+mae = torch.mean(torch.abs(actions - gt_actions))
+print(f"Mean action error: {mae.item():.3f}")
+log_history["mae"].append(mae)
 
 '''
 plot actions and gt_actions
