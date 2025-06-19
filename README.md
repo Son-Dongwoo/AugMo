@@ -13,13 +13,13 @@ conda create -n augmo python=3.10
 conda activate augmo
 
 # 2. LeRobot 설치
-# git clone https://github.com/huggingface/lerobot.git
+git subtree add --prefix=external/lerobot https://github.com/huggingface/lerobot.git main --squash
 cd lerobot
 pip install -e .
 cd ..
 
 # 3. 튜토리얼 환경 설치
-# git clone https://github.com/jeongeun980906/lerobot-mujoco-tutorial.git
+git subtree add --prefix=external/lerobot-mujoco-tutorial https://github.com/jeongeun980906/lerobot-mujoco-tutorial.git main --squash
 cd lerobot-mujoco-tutorial
 pip install -r requirements.txt
 cd..
