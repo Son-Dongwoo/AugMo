@@ -15,7 +15,7 @@ SEED = 0
 
 REPO_NAME = 'omy_pnp'
 NUM_DEMO = 10 # Number of demonstrations to collect
-ROOT = os.path.join(current_dir, "..", "demo_data") # The root directory to save the demonstrations
+ROOT = os.path.join(current_dir, "..", "dataset") # The root directory to save the demonstrations
 TASK_NAME = 'Put mug cup on the plate'
 xml_path = os.path.join(current_dir, "..", "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
 
@@ -37,7 +37,7 @@ if create_new:
                 repo_id=REPO_NAME,
                 root = ROOT, 
                 robot_type="omy",
-                fps=20, # 20 frames per second
+                fps=30, # 30 frames per second
                 features={
                     "observation.image": {
                         "dtype": "image",
@@ -77,7 +77,7 @@ episode_id = 0
 record_flag = False # Start recording when the robot starts moving
 while PnPEnv.env.is_viewer_alive() and episode_id < NUM_DEMO:
     PnPEnv.step_env()
-    if PnPEnv.env.loop_every(HZ=20):
+    if PnPEnv.env.loop_every(HZ=30):
         # check if the episode is done
         done = PnPEnv.check_success()
         if done: 
