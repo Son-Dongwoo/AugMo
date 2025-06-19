@@ -43,6 +43,8 @@ class EpisodeSampler(torch.utils.data.Sampler):
         return len(self.frame_ids)
 
 def get_next_train_dir(base_dir="."):
+    os.makedirs(base_dir, exist_ok=True)
+    
     prefix = "train"
     pattern = re.compile(f"{prefix}(\\d+)$")
 
