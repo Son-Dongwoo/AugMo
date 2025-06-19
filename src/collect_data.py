@@ -3,10 +3,28 @@ import os
 current_dir = os.path.dirname(__file__)
 sys.path.append(os.path.abspath(os.path.join(current_dir, '..', 'external', 'lerobot-mujoco-tutorial')))
 
+import re
 import numpy as np
 from PIL import Image
 from mujoco_env.y_env import SimpleEnv
 from lerobot.common.datasets.lerobot_dataset import LeRobotDataset
+
+def get_next_train_dir(base_dir="."):
+    os.makedirs(base_dir, exist_ok=True)
+    
+    prefix = "record"
+    pattern = re.compile(f"{prefix}(\\d+)$")
+
+    max_idx = 0
+    for name in os.listdir(base_dir):
+        match = pattern.match(name)
+        if match:
+            idx = int(match.group(1))
+            if idx > max_idx:
+                max_idx = idx
+
+    next_dir = f"{prefix}{max_idx + 1}"
+    return os.path.join(base_dir, next_dir)
 
 # If you want to randomize the object positions, set this to None
 # If you fix the seed, the object positions will be the same every time
@@ -15,7 +33,7 @@ SEED = 0
 
 REPO_NAME = 'omy_pnp'
 NUM_DEMO = 10 # Number of demonstrations to collect
-ROOT = os.path.join(current_dir, "..", "dataset") # The root directory to save the demonstrations
+ROOT = get_next_train_dir(os.path.join(current_dir, "..", "dataset")) # The root directory to save the demonstrations
 TASK_NAME = 'Put mug cup on the plate'
 xml_path = os.path.join(current_dir, "..", "lerobot-mujoco-tutorial/asset/example_scene_y.xml")
 
