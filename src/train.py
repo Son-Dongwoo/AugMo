@@ -8,6 +8,7 @@ from lerobot.common.policies.act.modeling_act import ACTPolicy
 from lerobot.configs.types import FeatureType
 from lerobot.common.datasets.factory import resolve_delta_timestamps
 
+import re
 import time
 import torch
 from torchvision import transforms
@@ -41,8 +42,23 @@ class EpisodeSampler(torch.utils.data.Sampler):
     def __len__(self) -> int:
         return len(self.frame_ids)
 
+def get_next_train_dir(base_dir="."):
+    prefix = "train"
+    pattern = re.compile(f"{prefix}(\\d+)$")
+
+    max_idx = 0
+    for name in os.listdir(base_dir):
+        match = pattern.match(name)
+        if match:
+            idx = int(match.group(1))
+            if idx > max_idx:
+                max_idx = idx
+
+    next_dir = f"{prefix}{max_idx + 1}"
+    return os.path.join(base_dir, next_dir)
+
 ROOT = os.path.join(current_dir, "..", "demo_data")
-SAVE_MODEL_DIR = os.path.join(current_dir, "..", "model")
+SAVE_MODEL_DIR = get_next_train_dir(base_dir=os.path.join(current_dir, "..", "model"))
 
 device = torch.device("cuda")
 
