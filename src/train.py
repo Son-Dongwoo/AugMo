@@ -68,8 +68,8 @@ device = torch.device("cuda")
 
 # Number of offline training steps (we'll only do offline training for this example.)
 # Adjust as you prefer. 5000 steps are needed to get something worth evaluating.
-training_steps = 10
-log_freq = 1
+training_steps = 1000
+log_freq = 100
 
 # When starting from scratch (i.e. not from a pretrained policy), we need to specify 2 things before
 # creating the policy:
